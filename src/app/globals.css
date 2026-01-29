@@ -121,6 +121,35 @@
   }
 }
 
+/* 性能优化 */
+@layer utilities {
+  /* 启用硬件加速 */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  
+  /* 优化模糊效果的渲染 */
+  [class*="blur-"] {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  
+  /* 简化的弹跳动画 */
+  .animate-bounce {
+    animation: bounce 2s ease-in-out infinite;
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(8px);
+    }
+  }
+}
+
 /* 隐藏 Next.js 开发工具覆盖层 */
 /*nextjs-portal {*/
 /*  display: none !important;*/

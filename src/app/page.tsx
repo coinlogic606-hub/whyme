@@ -24,12 +24,9 @@ const ThreeModelViewer = dynamic(() => import('@/components/three-model-viewer')
   ssr: false,
   loading: () => (
     <div className="flex items-center justify-center w-full h-full min-h-[500px]">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-      >
-<Box className="w-12 h-12 text-purple-400" />
-      </motion.div>
+      <div className="animate-spin">
+        <Box className="w-12 h-12 text-purple-400" />
+      </div>
     </div>
   )
 })
@@ -41,34 +38,15 @@ export default function WyndmeProductPage() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Animated Background */}
+      {/* Animated Background - 优化性能：减少模糊半径和动画 */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-black to-black" />
         <div className="absolute inset-0">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px]"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+          <div
+            className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-500/15 rounded-full blur-[80px] opacity-40"
           />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-pink-500/10 rounded-full blur-[120px]"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 4
-            }}
+          <div
+            className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-pink-500/15 rounded-full blur-[80px] opacity-40"
           />
         </div>
         {/* Grid Pattern */}
@@ -85,19 +63,11 @@ export default function WyndmeProductPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <motion.div
+              <div
                 className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center"
-                animate={{
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
               >
                 <Sparkles className="w-6 h-6 text-white" />
-              </motion.div>
+              </div>
               <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Wyndme
               </span>
@@ -151,20 +121,12 @@ export default function WyndmeProductPage() {
                 transition={{ delay: 0.3 }}
                 className="inline-block"
               >
-                <motion.span
+                <span
                   className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-sm font-medium inline-flex items-center gap-2"
-                  animate={{
-                    scale: [1, 1.05, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
                 >
                   <Star className="w-4 h-4" />
                   全新一代家庭陪伴机器人
-                </motion.span>
+                </span>
               </motion.div>
 
               <motion.h1
@@ -205,7 +167,7 @@ export default function WyndmeProductPage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-purple-500/50 bg-transparent hover:bg-purple-500/20 text-white px-8 text-lg h-14"
+                  className="border-purple-400 bg-purple-500/20 hover:bg-purple-500/40 hover:border-purple-300 text-purple-100 hover:text-white font-medium px-8 text-lg h-14 shadow-md shadow-purple-500/20 hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-200"
                 >
                   了解更多
                 </Button>
@@ -222,26 +184,17 @@ export default function WyndmeProductPage() {
                   { value: '12+', label: '小时续航' },
                   { value: '360°', label: '全方位感知' },
                 ].map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 + index * 0.1 }}
-                  >
-                    <motion.div
-                      className="text-3xl font-bold text-white bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
-                      animate={{
-                        scale: [1, 1.05, 1],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: index * 0.2
-                      }}
-                    >
-                      {stat.value}
-                    </motion.div>
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 + index * 0.1 }}
+              >
+                <div
+                  className="text-3xl font-bold text-white bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+                >
+                  {stat.value}
+                </div>
                     <div className="text-sm text-gray-400 mt-1">{stat.label}</div>
                   </motion.div>
                 ))}
@@ -265,32 +218,20 @@ export default function WyndmeProductPage() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator - 简化动画 */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2"
+          <div
+            className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2 animate-bounce"
           >
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+            <div
               className="w-1.5 h-1.5 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
             />
-          </motion.div>
+          </div>
         </motion.div>
       </section>
 
@@ -332,7 +273,7 @@ export default function WyndmeProductPage() {
                 >
                   <Cpu className="w-8 h-8 text-white" />
                 </motion.div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-purple-400 transition-colors relative z-10">
+                <h3 className="text-2xl font-bold mb-4 text-purple-300 group-hover:text-purple-400 transition-colors relative z-10">
                   AI核心
                 </h3>
                 <p className="text-gray-400 mb-6 relative z-10">
@@ -365,7 +306,7 @@ export default function WyndmeProductPage() {
                 >
                   <Zap className="w-8 h-8 text-white" />
                 </motion.div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-pink-400 transition-colors relative z-10">
+                <h3 className="text-2xl font-bold mb-4 text-pink-300 group-hover:text-pink-400 transition-colors relative z-10">
                   运动能力
                 </h3>
                 <p className="text-gray-400 mb-6 relative z-10">
@@ -398,7 +339,7 @@ export default function WyndmeProductPage() {
                 >
                   <Heart className="w-8 h-8 text-white" />
                 </motion.div>
-                <h3 className="text-2xl font-bold mb-4 group-hover:text-blue-400 transition-colors relative z-10">
+                <h3 className="text-2xl font-bold mb-4 text-blue-300 group-hover:text-blue-400 transition-colors relative z-10">
                   陪伴功能
                 </h3>
                 <p className="text-gray-400 mb-6 relative z-10">
@@ -579,7 +520,7 @@ export default function WyndmeProductPage() {
       <section id="预订" className="relative py-24 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/30 via-pink-900/30 to-purple-900/30" />
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/20 rounded-full blur-[120px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-500/25 rounded-full blur-[80px]" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -605,7 +546,7 @@ export default function WyndmeProductPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-purple-500/50 bg-transparent hover:bg-purple-500/20 text-white px-10 text-lg h-16"
+                className="border-purple-400 bg-purple-500/20 hover:bg-purple-500/30 text-purple-100 font-medium px-10 text-lg h-16 shadow-md shadow-purple-500/20"
               >
                 预约演示
               </Button>

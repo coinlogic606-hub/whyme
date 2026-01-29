@@ -37,13 +37,14 @@ export default function ThreeModelViewer({
     camera.position.set(0, 0, 5)
     cameraRef.current = camera
 
-    // Renderer setup
+    // Renderer setup - 优化性能
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
-      antialias: true
+      antialias: false, // 关闭抗锯齿以提升性能
+      powerPreference: 'high-performance'
     })
     renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)) // 限制像素比以提升性能
     renderer.outputColorSpace = THREE.SRGBColorSpace
     containerRef.current.appendChild(renderer.domElement)
     rendererRef.current = renderer
@@ -117,10 +118,18 @@ export default function ThreeModelViewer({
       }
     )
 
-    // Animation loop
+    // Animation loop - 使用节流优化性能
     let animationId: number
-    const animate = () => {
+    let lastTime = 0
+    const targetFPS = 30 // 限制帧率以提升性能
+    const frameInterval = 1000 / targetFPS
+    
+    const animate = (currentTime: number) => {
       animationId = requestAnimationFrame(animate)
+      
+      const deltaTime = currentTime - lastTime
+      if (deltaTime < frameInterval) return
+      lastTime = currentTime - (deltaTime % frameInterval)
 
       // Update controls
       controls.update()
@@ -132,7 +141,7 @@ export default function ThreeModelViewer({
 
       renderer.render(scene, camera)
     }
-    animate()
+    animate(0)
 
     // Handle resize
     const handleResize = () => {
