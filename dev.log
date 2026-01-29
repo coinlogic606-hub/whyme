@@ -1,13 +1,23 @@
+⚠ Warning: Next.js inferred your workspace root, but it may not be correct.
+ We detected multiple lockfiles and selected the directory of /Users/jingwenwang/package-lock.json as the root directory.
+ To silence this warning, set `turbopack.root` in your Next.js config, or consider removing one of the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-reference/config/next-config-js/turbopack#root-directory for more information.
+ Detected additional lockfiles: 
+   * /Users/jingwenwang/Desktop/whyme/package-lock.json
+
 ▲ Next.js 16.1.6 (Turbopack)
 - Local:         http://localhost:3000
 - Network:       http://192.168.124.15:3000
 
 ✓ Starting...
-Attention: Next.js now collects completely anonymous telemetry regarding usage.
-This information is used to shape Next.js' roadmap and prioritize features.
-You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-https://nextjs.org/telemetry
-
-⨯ Unable to acquire lock at /System/Volumes/Data/myDoc/show/glm/.next/dev/lock, is another instance of next dev running?
-  Suggestion: If you intended to restart next dev, terminate the other process, and then try again.
-[?25h
+✓ Ready in 2.7s
+ GET / 200 in 2.0s (compile: 1438ms, render: 601ms)
+ GET / 200 in 304ms (compile: 19ms, render: 285ms)
+✓ Compiled in 1450ms
+ GET / 200 in 546ms (compile: 44ms, render: 503ms)
+ GET / 200 in 360ms (compile: 20ms, render: 340ms)
+✓ Compiled in 786ms
+ GET / 200 in 225ms (compile: 13ms, render: 212ms)
+✓ Compiled in 495ms
+✓ Compiled in 1032ms
+✓ Compiled in 239ms
